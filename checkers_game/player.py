@@ -3,8 +3,8 @@
 
 class Player:
 
-    def __init__(self, username, pawn_color, pawn_quantity):
+    def __init__(self, username, pieces_color, pieces_quantity):
         self.username = username
-        self.pawn_color = pawn_color
-        self.pawn_quantity = 12
+        self.pieces_color = pieces_color
+        self.pieces_quantity = 12
 
