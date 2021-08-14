@@ -1,5 +1,6 @@
 from checkers_game.chessboard import Chessboard
 from checkers_game.move import Move
+from checkers_game.player import Player
 
 
 class CheckersGame:
@@ -8,8 +9,14 @@ class CheckersGame:
     # Chessboard Initialization
     chessboard = Chessboard()   # copy?
 
-    # Display Chessboard
+    # Players Initialization
+    player_01 = Player("player_01", "W")
+    player_02 = Player("player_02", "B")
+
+    # Display Chessboard and Player
     chessboard.print_chessboard()
+    print(player_01)
+    print(player_02)
 
     # Insert move
     move = Move(chessboard)
