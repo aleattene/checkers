@@ -18,11 +18,48 @@ class CheckersGame:
     print(player_01)
     print(player_02)
 
-    # Insert move
-    move = Move(chessboard)
+    while True:
+        # Move Player 01
+        # Insert move
+        move = Move(chessboard, player_01)
+        if move.move:
+            break
+        # Check move
+        while True:
+            legal_move = move.check_move(chessboard, player_01, move)
+            if legal_move:
+                print("Mossa Consentita")
+                chessboard.update_chessboard(move, player_01)
+                chessboard.print_chessboard()
+                print(player_01)
+                print(player_02)
+                break
+            else:
+                print("Mossa NON Consentita")
+                move = Move(chessboard, player_01)
+                if move.move:
+                    break
+                # Fix double blank line
 
-    # Check move
-    move.check_move(chessboard)
+        # Player 02
+        # Insert move
+        move = Move(chessboard, player_02)
+        if move.move:
+            break
+        # Check move
+        while True:
+            if move.check_move(chessboard, player_02, move):
+                print("Mossa Consentita")
+                chessboard.update_chessboard(move, player_02)
+                chessboard.print_chessboard()
+                print(player_01)
+                print(player_02)
+                break
+            else:
+                print("Mossa NON Consentita")
+                move = Move(chessboard, player_02)
+                if move.move:
+                    break
 
     # print(move.move_from_row)
     # print(move.move_from_col)

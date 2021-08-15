@@ -1,5 +1,3 @@
-# Entrypoint file
-
 from checkers_game.checkers_game import CheckersGame
 
 
