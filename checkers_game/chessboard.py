@@ -11,8 +11,6 @@ class Chessboard:
                           "A7", "C7", "E7", "G7",
                           "B8", "D8", "F8", "H8"]
 
-    cols_map = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
-
     def __init__(self):
         self.disposition = self.generate_chessboard()
 
@@ -39,8 +37,8 @@ class Chessboard:
             print("║▓ {} ▓".format(row), end="")
             if row % 2 == 0:
                 for col in range(1, cols, 2):
-                    if pieces[i] != "F":
-                        print(f"║  {pieces[i]}  ", end="")
+                    if pieces[i][0] != "F":
+                        print(f"║  {pieces[i][0]}  ", end="")
                         print("║░░░░░", end="")
                     else:
                         print("║     ", end="")
@@ -50,8 +48,8 @@ class Chessboard:
             else:
                 for col in range(1, cols, 2):
                     print("║░░░░░", end="")
-                    if pieces[i] != "F":
-                        print(f"║  {pieces[i]}  ", end="")
+                    if pieces[i][0] != "F":
+                        print(f"║  {pieces[i][0]}  ", end="")
                     else:
                         print("║     ", end="")
                     i += 1
@@ -61,8 +59,5 @@ class Chessboard:
         print("╚{:^53}╝".format("═" * 53))  # ASCII code (200,188,205)
         # print(self.disposition)
 
-    def update_chessboard(self, move, player):
-        self.disposition[move.move_from] = "F"
-        self.disposition[move.move_to] = player.pieces_color
 
 
