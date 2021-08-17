@@ -19,18 +19,21 @@ class Move:
         "A6C8": "B7", "C6A8": "B7", "C6E8": "D7", "E6C8": "D7", "E6G8": "E7", "G6E8": "E7",
     }
 
-    def __init__(self, chessboard, player, moves_list):
+    def __init__(self, player, moves_list):
         self.move_from_to = ""         # int
-        self.move = self.make_move(chessboard, player, moves_list)
+        self.move = self.make_move(player, moves_list)
 
-    def make_move(self, chessboard, player, moves_list):
+    def __str__(self):
+        pass
+
+    def make_move(self, player, moves_list):
         while True:
             # move = input(player.username + " - Enter the move (for example A3-B4 / blank line to quit): ")
             if len(moves_list) == 0:
                 check = True, True
                 break
             move = moves_list[0]
-            print(player.username + " " + move)
+            print("Move of " + player.username + ": " + move)
             moves_list.pop(0)
             check = Move.check_syntax_move(move)
             if check[0]:
@@ -54,7 +57,7 @@ class Move:
                     return False, False
         return True, False
 
-    def check_simple_move(self, chessboard, player_one, player_two):
+    def check_simple_move(self, chessboard, player_one):
 
         if self.move_from_to[:2] in chessboard.square_not_allowed \
                 or self.move_from_to[2:4] in chessboard.square_not_allowed:
