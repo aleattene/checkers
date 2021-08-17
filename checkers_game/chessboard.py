@@ -14,6 +14,9 @@ class Chessboard:
     def __init__(self):
         self.disposition = self.generate_chessboard()
 
+    def __str__(self):
+        pass
+
     @staticmethod
     def generate_chessboard():
         # Static Chessboard
