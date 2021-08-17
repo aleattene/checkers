@@ -10,3 +10,6 @@ class Player:
 
     def __str__(self):
         return f"{self.username}: \"{self.pieces_color}\" - {self.pieces_quantity}"
+
+
+
