@@ -32,17 +32,32 @@ class Chessboard:
         }
         return square_allowed_map
 
+    def check_checkers(self):
+        checkers_w_position = ["A8", "C8", "E8", "G8"]
+        for value in checkers_w_position:
+            if self.disposition[value] == "W":
+                self.disposition[value] = "WWW"
+        checkers_b_position = ["B1", "D1", "F1", "H1"]
+        for value in checkers_b_position:
+            if self.disposition[value] == "B":
+                self.disposition[value] = "BBB"
+
     def print_chessboard(self):
         print("╔{:^53}╗".format("═" * 53))  # ASCII code (201,205,187)
         rows, cols, i = 8, 8, 0                    # constants
         pieces = list(self.disposition.values())    # from dict to list
+        # print(pieces)
         for row in range(rows, 0, -1):
             print("║▓ {} ▓".format(row), end="")
             if row % 2 == 0:
                 for col in range(1, cols, 2):
-                    if pieces[i][0] != "F":
-                        print(f"║  {pieces[i][0]}  ", end="")
-                        print("║░░░░░", end="")
+                    if pieces[i] != "F":
+                        if len(pieces[i]) == 3:
+                            print(f"║ {pieces[i]} ", end="")
+                            print("║░░░░░", end="")
+                        else:
+                            print(f"║  {pieces[i]}  ", end="")
+                            print("║░░░░░", end="")
                     else:
                         print("║     ", end="")
                         print("║░░░░░", end="")
@@ -51,8 +66,11 @@ class Chessboard:
             else:
                 for col in range(1, cols, 2):
                     print("║░░░░░", end="")
-                    if pieces[i][0] != "F":
-                        print(f"║  {pieces[i][0]}  ", end="")
+                    if pieces[i] != "F":
+                        if len(pieces[i]) == 3:
+                            print(f"║ {pieces[i]} ", end="")
+                        else:
+                            print(f"║  {pieces[i]}  ", end="")
                     else:
                         print("║     ", end="")
                     i += 1
