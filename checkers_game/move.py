@@ -29,12 +29,14 @@ class Move:
     def make_move(self, player, moves_list):
         while True:
             # move = input(player.username + " - Enter the move (for example A3-B4 / blank line to quit): ")
+            # """
             if len(moves_list) == 0:
                 check = True, True
                 break
             move = moves_list[0]
+            # """
             print("Move of " + player.username + ": " + move)
-            moves_list.pop(0)
+            moves_list.pop(0)  #
             check = Move.check_syntax_move(move)
             if check[0]:
                 break
@@ -71,6 +73,16 @@ class Move:
                             chessboard.disposition[self.move_from_to[:2]] = "F"
                             chessboard.disposition[self.move_from_to[2:4]] = player_one.pieces_color
                             return True
+                elif chessboard.disposition[self.move_from_to[:2]] == "WWW":
+                    if chessboard.disposition[self.move_from_to[2:4]] == "F":
+                        if (self.move_from_to[:4]) in Move.simple_moves_w_allowed:
+                            chessboard.disposition[self.move_from_to[:2]] = "F"
+                            chessboard.disposition[self.move_from_to[2:4]] = "WWW"
+                            return True
+                        elif (self.move_from_to[2:4] + self.move_from_to[:2]) in Move.simple_moves_w_allowed:
+                            chessboard.disposition[self.move_from_to[:2]] = "F"
+                            chessboard.disposition[self.move_from_to[2:4]] = "WWW"
+                            return True
             # Move player 02
             elif player_one.pieces_color == "B":
                 if chessboard.disposition[self.move_from_to[:2]] == "B":
@@ -79,13 +91,23 @@ class Move:
                             chessboard.disposition[self.move_from_to[:2]] = "F"
                             chessboard.disposition[self.move_from_to[2:4]] = player_one.pieces_color
                             return True
+                elif chessboard.disposition[self.move_from_to[:2]] == "BBB":
+                    if chessboard.disposition[self.move_from_to[2:4]] == "F":
+                        if (self.move_from_to[2:4] + self.move_from_to[:2]) in Move.simple_moves_w_allowed:
+                            chessboard.disposition[self.move_from_to[:2]] = "F"
+                            chessboard.disposition[self.move_from_to[2:4]] = "BBB"
+                            return True
+                        elif (self.move_from_to[:4]) in Move.simple_moves_w_allowed:
+                            chessboard.disposition[self.move_from_to[:2]] = "F"
+                            chessboard.disposition[self.move_from_to[2:4]] = "BBB"
+                            return True
         return False
 
     def check_complex_move(self, chessboard, player_one, player_two):
 
         if self.move_from_to[:2] in chessboard.square_not_allowed \
                 or self.move_from_to[2:4] in chessboard.square_not_allowed:
-            return False  # Move is not allowed
+            return False  # The move is not allowed
         else:
             # Move player 01
             if player_one.pieces_color == "W":
@@ -97,6 +119,26 @@ class Move:
                                 chessboard.disposition[self.move_from_to[:2]] = "F"
                                 chessboard.disposition[self.move_from_to[2:4]] = player_one.pieces_color
                                 chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[:4]]] = "F"
+                                player_two.pieces_quantity -= 1
+                                return True
+                elif chessboard.disposition[self.move_from_to[:2]] == "WWW":
+                    if chessboard.disposition[self.move_from_to[2:4]] == "F":
+                        if (self.move_from_to[:4]) in Move.complex_moves_w_allowed:
+                            if chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[:4]]]\
+                                    in ["B", "BBB"]:
+                                chessboard.disposition[self.move_from_to[:2]] = "F"
+                                chessboard.disposition[self.move_from_to[2:4]] = "WWW"
+                                chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[:4]]] = "F"
+                                player_two.pieces_quantity -= 1
+                                return True
+                        elif (self.move_from_to[2:4] + self.move_from_to[:2]) in Move.complex_moves_w_allowed:
+                            if chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[2:4]
+                                                                                   + self.move_from_to[:2]]]\
+                                    in ["B", "BBB"]:
+                                chessboard.disposition[self.move_from_to[:2]] = "F"
+                                chessboard.disposition[self.move_from_to[2:4]] = "WWW"
+                                chessboard.disposition[Move.complex_moves_w_allowed[(self.move_from_to[2:4] +
+                                                                                     self.move_from_to[:2])]] = "F"
                                 player_two.pieces_quantity -= 1
                                 return True
             # Move player 02
@@ -111,6 +153,26 @@ class Move:
                                 chessboard.disposition[self.move_from_to[2:4]] = player_one.pieces_color
                                 chessboard.disposition[Move.complex_moves_w_allowed[(self.move_from_to[2:4] +
                                                                                      self.move_from_to[:2])]] = "F"
+                                player_two.pieces_quantity -= 1
+                                return True
+                elif chessboard.disposition[self.move_from_to[:2]] == "BBB":
+                    if chessboard.disposition[self.move_from_to[2:4]] == "F":
+                        if (self.move_from_to[2:4] + self.move_from_to[:2]) in Move.complex_moves_w_allowed:
+                            if chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[2:4]
+                                                                                   + self.move_from_to[:2]]] \
+                                    in ["W", "WWW"]:
+                                chessboard.disposition[self.move_from_to[:2]] = "F"
+                                chessboard.disposition[self.move_from_to[2:4]] = "BBB"
+                                chessboard.disposition[Move.complex_moves_w_allowed[(self.move_from_to[2:4] +
+                                                                                     self.move_from_to[:2])]] = "F"
+                                player_two.pieces_quantity -= 1
+                                return True
+                        if (self.move_from_to[:4]) in Move.complex_moves_w_allowed:
+                            if chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[:4]]] \
+                                    in ["W", "WWW"]:
+                                chessboard.disposition[self.move_from_to[:2]] = "F"
+                                chessboard.disposition[self.move_from_to[2:4]] = "BBB"
+                                chessboard.disposition[Move.complex_moves_w_allowed[self.move_from_to[:4]]] = "F"
                                 player_two.pieces_quantity -= 1
                                 return True
         return False
