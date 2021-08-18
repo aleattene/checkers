@@ -20,7 +20,7 @@ class Move:
     }
 
     def __init__(self, player, moves_list):
-        self.move_from_to = ""         # int
+        self.move_from_to = ""
         self.move = self.make_move(player, moves_list)
 
     def __str__(self):
@@ -36,11 +36,14 @@ class Move:
             move = moves_list[0]
             # """
             print("Move of " + player.username + ": " + move)
-            moves_list.pop(0)  #
+            moves_list.pop(0)  # Removes the first element of the list
             check = Move.check_syntax_move(move)
+            # Correct move entered
             if check[0]:
                 break
+            # No Correct move entered
             print("Insert Error. Retry.")
+        # Blank line entered
         if check[1]:
             return check[1]
         else:
@@ -49,18 +52,22 @@ class Move:
 
     @staticmethod
     def check_syntax_move(move):
+        # Blank line
         if move == "":
             return True, True
+        # No correct move (wrong number of characters)
         elif len(move) % 2 != 0:
             return False, False
         else:
+            # Test of each character
             for i in range(0, len(move), 2):
                 if not("A" <= move[i].upper() <= "H") or not("1" <= move[i+1] <= "8"):
                     return False, False
+        # Correct Move
         return True, False
 
+    # This method checks the correctness of the simple move
     def check_simple_move(self, chessboard, player_one):
-
         if self.move_from_to[:2] in chessboard.square_not_allowed \
                 or self.move_from_to[2:4] in chessboard.square_not_allowed:
             return False    # Move is not allowed
@@ -103,8 +110,8 @@ class Move:
                             return True
         return False
 
+    # This method checks the correctness of the move "eat another(s) piece(s)"
     def check_complex_move(self, chessboard, player_one, player_two):
-
         if self.move_from_to[:2] in chessboard.square_not_allowed \
                 or self.move_from_to[2:4] in chessboard.square_not_allowed:
             return False  # The move is not allowed

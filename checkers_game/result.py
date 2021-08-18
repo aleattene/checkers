@@ -9,6 +9,7 @@ class Result:
     def __str__(self):
         pass
 
+    # This method checks every move the result of the match
     @staticmethod
     def check_result(player_01, player_02):
         print(player_01)

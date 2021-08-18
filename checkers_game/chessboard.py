@@ -48,13 +48,13 @@ class Chessboard:
         pieces = list(self.disposition.values())    # from dict to list
         # print(pieces)
         for row in range(rows, 0, -1):
-            print("║▓ {} ▓".format(row), end="")
+            print("║▓ {} ▓".format(row), end="")    # ASCII code
             if row % 2 == 0:
                 for col in range(1, cols, 2):
                     if pieces[i] != "F":
                         if len(pieces[i]) == 3:
                             print(f"║ {pieces[i]} ", end="")
-                            print("║░░░░░", end="")
+                            print("║░░░░░", end="")     # ASCII code
                         else:
                             print(f"║  {pieces[i]}  ", end="")
                             print("║░░░░░", end="")
